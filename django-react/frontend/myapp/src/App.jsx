@@ -5,6 +5,8 @@ import { AuthProvider, useAuth } from "./context/AuthContext"; // Assuming useAu
 import Dashboard from "./pages/Dashboard.jsx";
 import LoginPage from "./components/auth/Login.jsx"; // Renamed and path corrected
 import Navbar from "./components/Navbar.jsx"; // Renamed and path corrected
+import CreatePost from "./components/Posts/CreatePost.jsx";
+import PostList from "./components/Posts/PostList.jsx";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/create-post" element={<CreatePost />}></Route>
+          <Route path="/post-list" element={<PostList />}></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
