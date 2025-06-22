@@ -125,4 +125,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS= True
+CORS_ALLOW_ALL_ORIGINS = False # Change this to False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Add your frontend's origin here
+]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}

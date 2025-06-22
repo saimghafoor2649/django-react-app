@@ -1,7 +1,8 @@
 import axios from "axios";
 
+// Create axios instance with base URL
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "http://localhost:8000/api", // Adjust this to your backend URL
   withCredentials: true,
 });
 
@@ -14,15 +15,9 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const authAPI = {
-  register: (data) => api.post("/auth/register", data),
-  login: (data) => api.post("/auth/login/", data), // You'll need to add this endpoint
-};
-
 export const postAPI = {
-  getPosts: () => api.get("/Post/"),
-  createPost: (data) => api.post("/Post/", data),
-  deletePost: (id) => api.delete(`/posts/delete/${id}/`),
+  getPosts: () => api.get("/posts/"),
+  createPost: (data) => api.post("/posts/", data),
+  deletePost: (id) => api.delete(`/posts/${id}/`),
 };
-
 export default api;

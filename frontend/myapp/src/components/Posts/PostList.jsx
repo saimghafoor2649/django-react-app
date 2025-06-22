@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { postAPI } from "../../api";
 import CreatePost from "../Posts/CreatePost";
-import PostItem from "../Posts/PostList"; // ✅ Import PostItem if it's in use
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ Define loading state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -13,24 +13,17 @@ const PostList = () => {
         const response = await postAPI.getPosts();
         setPosts(response.data);
       } catch (err) {
+        setError("Failed to fetch posts. Please try again later.");
         console.error("Failed to fetch posts:", err);
       } finally {
-        setLoading(false); // ✅ Stop loading
+        setLoading(false);
       }
     };
     fetchPosts();
   }, []);
 
-  const handleDelete = async (id) => {
-    try {
-      await postAPI.deletePost(id);
-      setPosts(posts.filter((post) => post.id !== id));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  if (loading) return <div>Loading...</div>; // ✅ Will now work properly
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="post-list">
@@ -39,7 +32,10 @@ const PostList = () => {
         <p>No posts found.</p>
       ) : (
         posts.map((post) => (
-          <PostItem key={post.id} post={post} onDelete={handleDelete} />
+          <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+          </div>
         ))
       )}
     </div>
